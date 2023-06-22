@@ -1,0 +1,113 @@
+import React, { useState } from 'react';
+
+const ResumeBuilder = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
+  const [education, setEducation] = useState([{ institution: '', year: '', degree: '' }]);
+  const [experience, setExperience] = useState([{ company: '', year: '', designation: '' }]);
+  const [skills, setSkills] = useState([]);
+  const [newSkill, setNewSkill] = useState('');
+
+  const handleEducationChange = (index, field, value) => {
+    const updatedEducation = [...education];
+    updatedEducation[index][field] = value;
+    setEducation(updatedEducation);
+  };
+
+  const handleExperienceChange = (index, field, value) => {
+    const updatedExperience = [...experience];
+    updatedExperience[index][field] = value;
+    setExperience(updatedExperience);
+  };
+
+  const handleAddEducation = () => {
+    setEducation([...education, { institution: '', year: '', degree: '' }]);
+  };
+
+  const handleAddExperience = () => {
+    setExperience([...experience, { company: '', year: '', designation: '' }]);
+  };
+
+  const handleAddSkill = () => {
+    setSkills([...skills, newSkill]);
+    setNewSkill('');
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Process the form data or save it to the server
+    // You can use Redux actions here if you implement Redux
+  };
+
+  return (
+    <div className="container">
+      <form onSubmit={handleSubmit}>
+        <h2>Resume Builder</h2>
+
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+
+        <label htmlFor="address">Address</label>
+        <input
+          type="text"
+          id="address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          required
+        />
+
+        <label htmlFor="phone">Phone</label>
+        <input
+          type="tel"
+          id="phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          required
+        />
+
+        <h3>Education</h3>
+        {education.map((edu, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              value={edu.institution}
+              onChange={(e) => handleEducationChange(index, 'institution', e.target.value)}
+              placeholder="Institution"
+              required
+            />
+
+            <input
+              type="text"
+              value={edu.year}
+              onChange={(e) => handleEducationChange(index, 'year', e.target.value)}
+              placeholder="Year"
+              required
+            />
+
+            <input
+              type="text"
+              value={edu.degree}
+              onChange={(e) => handleEducationChange(index, 'degree', e.target.value)}
+              placeholder="Degree"
+              required
+            />
+          </div>
+        ))}
+   
